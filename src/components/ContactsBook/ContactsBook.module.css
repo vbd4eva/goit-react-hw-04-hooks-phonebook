@@ -1,0 +1,23 @@
+.contactsContainer {
+  position: relative;
+  top: 30px;
+  width: 300px;
+  padding: 20px;
+  padding-top: 40px;
+  margin: 0 auto;
+  border: 1px solid var(--color-neon-opacity);
+  border-radius: 14px;
+  box-shadow: var(--shadow-in);
+}
+
+.contactsContainer:before {
+  content: "";
+  position: absolute;
+  top: 7px;
+  left: 10px;
+  width: calc(100% - 20px);
+  height: calc(100% - 17px);
+  display: block;
+  box-shadow: var(--shadow-out);
+  border-radius: 7px;
+}
