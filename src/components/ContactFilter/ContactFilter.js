@@ -24,7 +24,7 @@ function ContactFilter({ value, setFilter }) {
 
 ContactFilter.propTypes = {
     value: PropTypes.string.isRequired,
-    onChange: PropTypes.func.isRequired,
+    setFilter: PropTypes.func.isRequired,
 }
 
 export default ContactFilter

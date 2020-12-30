@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import { v4 as uuidv4 } from 'uuid';
 
 import { ToastContainer, toast } from 'react-toastify';
@@ -14,6 +14,52 @@ export default function App() {
   const [contacts, setContacts] = useState([]);
   const [filter, setFilter] = useState('');
 
+  useEffect(()=> {
+    
+      const localStorageСontacts = JSON.parse(
+          localStorage.getItem('contacts')
+        );
+    if (localStorageСontacts?.length) {
+      console.log('пишет из локал сторадж');
+      setContacts(localStorageСontacts);
+      }  
+  },[]);
+
+  useEffect(() => {
+
+
+
+      localStorage.setItem('contacts', JSON.stringify(contacts));
+      console.log('пишет в локал сторадж');
+  
+
+  }, [contacts]);
+
+
+  
+  //   componentDidMount() {
+  //     console.log('App componentDidMount');
+
+  //     const contacts = localStorage.getItem('contacts');
+  //     const parsedContacts = JSON.parse(contacts);
+
+  //     if (parsedContacts) {
+  //       this.setState({ contacts: parsedContacts });
+  //     }
+  // }
+
+  // componentDidUpdate(prevProps, prevState) {
+  //   console.log('App componentDidUpdate');
+
+  //   const newContactList = this.state.contacts;
+  //   const prevContactList = prevState.contacts;
+
+  //   if (newContactList !== prevContactList) {
+  //     console.log('Обновилось поле contacts, записываю contacts в хранилище');
+  //     localStorage.setItem('contacts', JSON.stringify(newContactList));
+  //   }
+  // }
+
   const handleContactCart = (newContactCart) =>{   
     const doubleContact = findInContacts(newContactCart.name);  
     if (doubleContact) { 
@@ -21,8 +67,7 @@ export default function App() {
       return
     }
     addNewContact(newContactCart);
-  }
-  
+  }  
   const deleteContact = (contactId) => { 
     const newContactList = contacts.filter(
       ({id}) =>(id !== contactId)
