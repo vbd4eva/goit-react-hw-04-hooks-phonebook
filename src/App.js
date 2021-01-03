@@ -11,54 +11,14 @@ import ContactList from './components/ContactList/ContactList';
 
 export default function App() {
 
-  const [contacts, setContacts] = useState([]);
+  const [contacts, setContacts] = useState(()=>JSON.parse(  localStorage.getItem('contacts') ) ?? [] );
   const [filter, setFilter] = useState('');
 
-  useEffect(()=> {
-    
-      const localStorageСontacts = JSON.parse(
-          localStorage.getItem('contacts')
-        );
-    if (localStorageСontacts?.length) {
-      console.log('пишет из локал сторадж');
-      setContacts(localStorageСontacts);
-      }  
-  },[]);
-
   useEffect(() => {
-
-
-
       localStorage.setItem('contacts', JSON.stringify(contacts));
-      console.log('пишет в локал сторадж');
-  
-
+      // console.log('пишет в локал сторадж');
   }, [contacts]);
 
-
-  
-  //   componentDidMount() {
-  //     console.log('App componentDidMount');
-
-  //     const contacts = localStorage.getItem('contacts');
-  //     const parsedContacts = JSON.parse(contacts);
-
-  //     if (parsedContacts) {
-  //       this.setState({ contacts: parsedContacts });
-  //     }
-  // }
-
-  // componentDidUpdate(prevProps, prevState) {
-  //   console.log('App componentDidUpdate');
-
-  //   const newContactList = this.state.contacts;
-  //   const prevContactList = prevState.contacts;
-
-  //   if (newContactList !== prevContactList) {
-  //     console.log('Обновилось поле contacts, записываю contacts в хранилище');
-  //     localStorage.setItem('contacts', JSON.stringify(newContactList));
-  //   }
-  // }
 
   const handleContactCart = (newContactCart) =>{   
     const doubleContact = findInContacts(newContactCart.name);  
@@ -67,7 +27,12 @@ export default function App() {
       return
     }
     addNewContact(newContactCart);
-  }  
+  }
+  const getFilteredContacts = () => {
+    return contacts.filter(
+        ({name}) => name.toLocaleLowerCase().includes(filter.toLocaleLowerCase())
+    )
+  };
   const deleteContact = (contactId) => { 
     const newContactList = contacts.filter(
       ({id}) =>(id !== contactId)
@@ -84,7 +49,6 @@ export default function App() {
             <ContactsBook totalNumber={contacts.length}>
               <ContactFilter value={filter} setFilter={setFilter} />
               <ContactList contacts={getFilteredContacts()} deleteContact={deleteContact}/>
-              {/* <ContactList contacts={filteredContacts} deleteContact={this.deleteContact}/> */}
             </ContactsBook>
         
         
@@ -106,9 +70,5 @@ export default function App() {
   function findInContacts(newContactName) {
     return contacts.find(({ name }) => name === newContactName);
   };
-  function getFilteredContacts(){
-    return contacts.filter(
-        ({name}) => name.toLocaleLowerCase().includes(filter.toLocaleLowerCase())
-    )
-  };
+
 }
