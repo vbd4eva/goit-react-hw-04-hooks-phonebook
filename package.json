@@ -12,7 +12,10 @@
     "react-toastify": "^6.2.0",
     "web-vitals": "^0.2.4"
   },
+  "homepage": "https://vbd4eva.github.io/goit-react-hw-04-hooks-phonebook",
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
